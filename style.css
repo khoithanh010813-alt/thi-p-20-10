@@ -1,0 +1,369 @@
+/* Custom Stylesheet for 20/10 Website */
+
+/* 1. Global & Utilities */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #030712;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(244, 63, 94, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(236, 72, 153, 0.12) 0px, transparent 50%);
+    background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #030712;
+}
+::-webkit-scrollbar-thumb {
+    background: #f43f5e;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #fb7185;
+}
+
+/* 2. Floating Petals & Hearts */
+.petal {
+    position: absolute;
+    background: radial-gradient(circle, #ff758c 0%, #ff7eb3 100%);
+    border-radius: 150% 0 150% 0;
+    opacity: 0.7;
+    filter: drop-shadow(0 2px 4px rgba(255, 105, 180, 0.4));
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% {
+        top: -10%;
+        transform: rotate(0deg) scale(0.8) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        top: 105%;
+        transform: rotate(720deg) scale(1) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* 3. Music Wave Animation */
+.music-wave .bar {
+    width: 2px;
+    background-color: #fb7185;
+    border-radius: 1px;
+    animation: soundWave 0.8s ease-in-out infinite alternate;
+}
+.music-wave .bar:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.music-wave .bar:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes soundWave {
+    0% { height: 20%; }
+    100% { height: 100%; }
+}
+
+.music-paused .music-wave .bar {
+    animation-play-state: paused;
+    height: 20% !important;
+}
+
+/* 4. Envelope Component (3D Realistic Animation) */
+.envelope-wrapper {
+    position: relative;
+    width: 320px;
+    height: 220px;
+}
+
+@media (min-width: 640px) {
+    .envelope-wrapper {
+        width: 420px;
+        height: 260px;
+    }
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #be123c;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px -15px rgba(225, 29, 72, 0.5);
+    perspective: 1000px;
+}
+
+.envelope-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #9f1239;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+/* The Letter inside */
+.letter {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 90%;
+    background: #ffffff;
+    border-radius: 8px;
+    z-index: 2;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), height 0.6s ease, z-index 0.6s step-end;
+    transform: translateY(0);
+    overflow: hidden;
+}
+
+.envelope-front {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-style: solid;
+    border-width: 0 0 130px 160px;
+    border-color: transparent transparent #e11d48 transparent;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: 0 0 12px 12px;
+}
+
+@media (min-width: 640px) {
+    .envelope-front {
+        border-width: 0 0 150px 210px;
+    }
+}
+
+.envelope::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-style: solid;
+    border-width: 0 160px 130px 0;
+    border-color: transparent #fb7185 transparent transparent;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.4;
+    border-radius: 0 0 12px 12px;
+}
+
+@media (min-width: 640px) {
+    .envelope::before {
+        border-width: 0 210px 150px 0;
+    }
+}
+
+.envelope-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-style: solid;
+    border-width: 120px 160px 0 160px;
+    border-color: #f43f5e transparent transparent transparent;
+    transform-origin: top;
+    transition: transform 0.5s ease-in-out;
+    z-index: 4;
+}
+
+@media (min-width: 640px) {
+    .envelope-top {
+        border-width: 140px 210px 0 210px;
+    }
+}
+
+.envelope-seal {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 48px;
+    background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(180, 83, 9, 0.6);
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+    .envelope-seal {
+        top: 110px;
+        width: 52px;
+        height: 52px;
+    }
+}
+
+/* Opened Envelope State */
+.envelope.open .envelope-top {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope.open .envelope-seal {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.envelope.open .letter {
+    transform: translateY(-160px);
+    height: 380px;
+    z-index: 10;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+}
+
+@media (min-width: 640px) {
+    .envelope.open .letter {
+        transform: translateY(-180px);
+        height: 420px;
+    }
+}
+
+/* 5. Gift Box Component */
+.gift-box {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-top: 30px;
+}
+
+.gift-lid {
+    position: absolute;
+    top: -20px;
+    left: -8px;
+    width: 136px;
+    height: 28px;
+    background: linear-gradient(135deg, #f43f5e, #e11d48);
+    border-radius: 6px;
+    box-shadow: 0 6px 15px rgba(244, 63, 94, 0.4);
+    z-index: 3;
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.gift-lid::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 100%;
+    background: #fbbf24;
+}
+
+.gift-bow {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 18px;
+    background: #f59e0b;
+    border-radius: 12px;
+}
+
+.gift-body {
+    position: absolute;
+    bottom: 0;
+    width: 120px;
+    height: 100px;
+    background: linear-gradient(135deg, #be123c, #9f1239);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    overflow: hidden;
+}
+
+.gift-body::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 100%;
+    background: #fbbf24;
+}
+
+/* Opened gift box animation */
+.gift-box.opened .gift-lid {
+    transform: translateY(-60px) rotate(-25deg);
+}
+
+.gift-box.opened {
+    animation: giftBounce 0.6s ease forwards;
+}
+
+@keyframes giftBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1.05); }
+}
+
+/* 6. Polaroid Photo Cards */
+.polaroid-card {
+    background: #ffffff;
+    padding: 12px 12px 18px 12px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: rotate(-1deg);
+}
+
+.polaroid-card:nth-child(2) {
+    transform: rotate(2deg);
+}
+
+.polaroid-card:nth-child(3) {
+    transform: rotate(-2deg);
+}
+
+.polaroid-card:hover {
+    transform: translateY(-8px) scale(1.03) rotate(0deg);
+    box-shadow: 0 25px 45px -10px rgba(244, 63, 94, 0.4);
+    z-index: 10;
+}
+
+/* 7. Gacha Cards */
+.gacha-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease, box-shadow 0.3s ease;
+}
+
+.gacha-card.flipped {
+    background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(15, 23, 42, 0.9));
+    border-color: #fb7185;
+    animation: cardGlow 1.5s infinite alternate;
+}
+
+@keyframes cardGlow {
+    from {
+        box-shadow: 0 0 10px rgba(251, 113, 133, 0.3);
+    }
+    to {
+        box-shadow: 0 0 25px rgba(251, 113, 133, 0.7);
+    }
+}
